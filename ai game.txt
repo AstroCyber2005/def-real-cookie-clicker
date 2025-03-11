@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crumb Collector Deluxe™</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fff8f0;
+      text-align: center;
+      padding: 40px;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffcc80;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ffb74d;
+    }
+    .upgrades {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ Crumb Collector Deluxe™</h1>
+    <p id="crumbs">Crumbs: 0</p>
+    <button onclick="clickCrumb()">Click Me 🍪</button>
+
+    <div class="upgrades">
+      <button onclick="buyClickUpgrade()" id="click-upgrade">Upgrade Click (10 crumbs)</button>
+      <button onclick="buyIdleUpgrade()" id="idle-upgrade">Upgrade Idle (25 crumbs)</button>
+    </div>
+
+    <p id="per-click">Per Click: 1</p>
+    <p id="per-second">Per Second: 0</p>
+  </div>
+
+  <script>
+    let crumbs = 0;
+    let perClick = 1;
+    let perSecond = 0;
+    let clickUpgradeCost = 10;
+    let idleUpgradeCost = 25;
+
+    function updateUI() {
+      document.getElementById("crumbs").innerText = `Crumbs: ${Math.floor(crumbs)}`;
+      document.getElementById("per-click").innerText = `Per Click: ${perClick}`;
+      document.getElementById("per-second").innerText = `Per Second: ${perSecond}`;
+      document.getElementById("click-upgrade").innerText = `Upgrade Click (${Math.floor(clickUpgradeCost)} crumbs)`;
+      document.getElementById("idle-upgrade").innerText = `Upgrade Idle (${Math.floor(idleUpgradeCost)} crumbs)`;
+    }
+
+    function clickCrumb() {
+      crumbs += perClick;
+      updateUI();
+    }
+
+    function buyClickUpgrade() {
+      if (crumbs >= clickUpgradeCost) {
+        crumbs -= clickUpgradeCost;
+        perClick += 1;
+        clickUpgradeCost *= 1.5;
+        updateUI();
+      }
+    }
+
+    function buyIdleUpgrade() {
+      if (crumbs >= idleUpgradeCost) {
+        crumbs -= idleUpgradeCost;
+        perSecond += 0.5;
+        idleUpgradeCost *= 2;
+        updateUI();
+      }
+    }
+
+    setInterval(() => {
+      crumbs += perSecond;
+      updateUI();
+    }, 1000);
+
+    updateUI();
+  </script>
+</body>
+</html>
